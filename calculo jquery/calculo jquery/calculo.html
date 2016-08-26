@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title> Calculo com jquery</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script src="js/jquery-3.1.0.min.js"></script>
+</head>
+
+<body>
+
+<select name="quantidade" id="quantidade">
+    <option value="1" selected>até R$25.000,00</option>
+    <option value="2">de R$25.00,00 até R$50.000,00</option>
+    <option value="3">de R$50.00,00 até R$100.000,00</option>
+    <option value="4">de R$100.00,00 até R$150.000,00</option>
+</select><br />
+
+Numero de funcionarios: <input type="number" name="funcionarios" id="funcionarios" size="30" value="0" min="0" max="10"/><br />
+Numero de socios na empresa: <input type="number" name="socios" id="socios" size="30" value="1" min="1" max="10"/><br />
+
+<input type="hidden" name="valor_unitario" id="valor_unitario" value="50.00" />
+<input type="hidden" name="valor_unitario_funcionario" id="valor_unitario_funcionario" value="29.00" />
+<input type="hidden" name="valor_unitario_socio" id="valor_unitario_socio" value="29.00" />
+ 
+<div>
+Valor total: <span id="valor_total"></span>
+</div>
+
+
+
+
+<!--scripts-->
+
+<script type="text/javascript">
+//function atualizarValorTotal() {
+
+    $(document).ready(function(){
+        var valor_total = 0;
+        $("#valor_total").text("R$ " + valor_total);
+        
+        $("#quantidade").change(function(){
+
+            var quantidade = $("#quantidade").val();
+            var valor_unitario = $("#valor_unitario").val();
+            valor_total = valor_unitario * quantidade;
+            $("#valor_total").text("R$ " + valor_total);
+        });  
+
+        $('#funcionarios').change(function() {
+            if($('#funcionarios').val() > 0){
+
+                var valor_qtdFunc =  $("#funcionarios").val();
+                var valor_unitario_func = $("#valor_unitario_funcionario").val();
+                valor_total = valor_unitario_func * valor_qtdFunc;
+                $("#valor_total").text("R$ " + valor_total);
+            }
+        });   
+
+         $('#socios').change(function() {
+            if($('#socios').val() >= 1){
+
+                var valor_qtdSocio =  $("#socios").val();
+                var valor_unitario_socio = $("#valor_unitario_socio").val();
+                valor_total = valor_unitario_socio * valor_qtdSocio;
+                $("#valor_total").text("R$ " + valor_total);
+            }
+        });         
+        
+    });
+//}
+/*function atualizarValorTotalSocioFuncionario() {
+    $(document).ready(function(){
+        var valor_FUNCIONARIO = $("#valor_funcionario").val();
+        //var valor_unitario = $("#valor_unitario").val();
+        var valor_total += valor_FUNCIONARIO;
+        
+        $("#valor_total").text("R$ " + valor_total);
+    });
+}
+ 
+$(document).ready(function(){
+    $("#quantidade").change(function(){
+        atualizarValorTotal();
+    });
+    
+     $('#funcionarios').change(function() {
+        atualizarValorTotalSocioFuncionario();
+            
+     });
+     /*$('#socios').change(function() {
+        atualizarValorTotalSocioFuncionario("valor_socio");
+     }); 
+});*/
+ 
+//atualizarValorTotal();
+//atualizarValorTotalSocioFuncionario();
+</script>
+</body>
+</html>
