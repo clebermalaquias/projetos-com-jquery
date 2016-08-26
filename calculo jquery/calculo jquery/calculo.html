@@ -19,12 +19,11 @@
 Numero de funcionarios: <input type="number" name="funcionarios" id="funcionarios" size="30" value="0" min="0" max="10"/><br />
 Numero de socios na empresa: <input type="number" name="socios" id="socios" size="30" value="1" min="1" max="10"/><br />
 
-<input type="hidden" name="valor_unitario" id="valor_unitario" value="50.00" />
-<input type="hidden" name="valor_unitario_funcionario" id="valor_unitario_funcionario" value="29.00" />
-<input type="hidden" name="valor_unitario_socio" id="valor_unitario_socio" value="29.00" />
+<input type="hidden" name="valor_unitario" id="valor_unitario" value="29" />
+
  
 <div>
-Valor total: <span id="valor_total"></span>
+Valor total: <span id="valor_total_text"></span>
 </div>
 
 
@@ -36,37 +35,41 @@ Valor total: <span id="valor_total"></span>
 //function atualizarValorTotal() {
 
     $(document).ready(function(){
-        var valor_total = 0;
-        $("#valor_total").text("R$ " + valor_total);
+        var valor_total = 29;
+       
         
         $("#quantidade").change(function(){
 
             var quantidade = $("#quantidade").val();
             var valor_unitario = $("#valor_unitario").val();
+
             valor_total = valor_unitario * quantidade;
-            $("#valor_total").text("R$ " + valor_total);
+            
         });  
 
         $('#funcionarios').change(function() {
             if($('#funcionarios').val() > 0){
 
-                var valor_qtdFunc =  $("#funcionarios").val();
-                var valor_unitario_func = $("#valor_unitario_funcionario").val();
-                valor_total = valor_unitario_func * valor_qtdFunc;
-                $("#valor_total").text("R$ " + valor_total);
+                var valor_qtdFunc =  parseInt($("#funcionarios").val());
+                var valor_unitario_func = parseInt($("#valor_unitario").val());
+                var valor_func_qtd = (valor_unitario_func * valor_qtdFunc);
+                valor_total = valor_func_qtd + valor_total;
+                $("#valor_total_text").text("R$ " + valor_total);
             }
         });   
 
          $('#socios').change(function() {
             if($('#socios').val() >= 1){
 
-                var valor_qtdSocio =  $("#socios").val();
-                var valor_unitario_socio = $("#valor_unitario_socio").val();
-                valor_total = valor_unitario_socio * valor_qtdSocio;
-                $("#valor_total").text("R$ " + valor_total);
+                var valor_qtdSocio =  parseInt($("#socios").val());
+                var valor_unitario_socio = parseInt($("#valor_unitario").val());
+                var valor_socio_qtd = (valor_unitario_socio * valor_qtdSocio);
+                valor_total = valor_socio_qtd + valor_total;
+                $("#valor_total_text").text("R$ " + valor_total);
             }
         });         
         
+      
     });
 //}
 /*function atualizarValorTotalSocioFuncionario() {
