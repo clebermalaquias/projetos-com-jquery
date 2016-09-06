@@ -38,66 +38,81 @@
 
     <script type="text/javascript">
 
-    //var valor_total;
+    
+       
+    var total = 50;
+    var valor_base= 29;
     $(document).ready(function(){
+           
+        
+        $("#simples").attr("disabled","disabled");
+        $("#lucro").removeAttr('disabled');
+        $("#valor_total_text").text("R$ " + total);
+
+        
+        $("#simples").click(function(){
             
-            var total = 0;
-            var valor_base = 0;
+            if(Number($("#faturamento").val()) ==1 && Number($("#funcionarios").val()) ==0 && Number($('#socios').val()) ==1 && total ==0){
+                total = 50;
+                //$("#valor_total_text").text("R$ " + total);
+            }else{
+               total +=valor_base;    
+            }
             
-            start(total);
+            $(this).attr("disabled","disabled");
+            $("#lucro").removeAttr('disabled');
+            $("#valor_total_text").text("R$ " + total);
+        });
+
+         $("#lucro").click(function(){
             
-            $("#simples").click(function(){
-                valor_base = 16;
-                total += valor_base;
-                $(this).attr("disabled","disabled");
-                $("#lucro").removeAttr('disabled');
-                $("#valor_total_text").text("R$ " + total);
-            });
+            if(Number($("#faturamento").val()) ==1 && Number($("#funcionarios").val()) ==0 && Number($('#socios').val()) ==1 && total ==0){
+                total = 100;
+                //$("#valor_total_text").text("R$ " + total);
+            }else{
+                total +=valor_base;    
+            }
 
-             $("#lucro").click(function(){
-                valor_base = 33;
-                total += valor_base;
-                $(this).attr("disabled","disabled");
-                $("#simples").removeAttr('disabled');
-                $("#valor_total_text").text("R$ " + total);
-            });
+           
+            $(this).attr("disabled","disabled");
+            $("#simples").removeAttr('disabled');
+            $("#valor_total_text").text("R$ " + total);
+        });
 
-            $("#faturamento").change(function(){
+        $("#faturamento").change(function(){
 
-                // atualizaValor('faturamento','valor_unitario');
-                total += Number($(this).val()) + valor_base;
-                 $("#valor_total_text").text("R$ " + total);
-                
-            });  
+            atualizaValor();
+            $("#valor_total_text").text("R$ " + total);
+            
+        });  
 
-            $("#funcionarios").change(function() {
+        $("#funcionarios").change(function() {
 
-                //atualizaValor('funcionarios','valor_unitario');
-                total += Number($(this).val()) + valor_base;
-                 $("#valor_total_text").text("R$ " + total);
-            });   
+            atualizaValor();
+            $("#valor_total_text").text("R$ " + total);
+        });   
 
-             $('#socios').change(function() {
-                //atualizaValor('socios','valor_unitario');
-                if($(this).val() > 2){
-                    total += Number($(this).val()) + valor_base;
-                    $("#valor_total_text").text("R$ " + total);
-                }
-            });  
+         $('#socios').change(function() {
+           atualizaValor();
+             
+            $("#valor_total_text").text("R$ " + total);
+            
+        });  
 
-     
-     
+   
+        
     });
      
-   
-    function start(total){
-        //iniciando valor de mensalidade utilizando simples com 1 socio e faturamento 25000
-        
-        $("#simples").click();
-        //total+= 16 * 2;
-        //$("#valor_total_text").text("R$ " + total);
+   function atualizaValor(){
 
-    }
+        var faturamento_valor = Number($("#faturamento").val());
+        var funcionarios_valor = Number($("#funcionarios").val());
+        var socios_valor = Number($("#socios").val());
+        
+        if(funcionarios_valor > 0 || socios_valor> 0 || faturamento_valor > 0)
+            total = (funcionarios_valor + socios_valor + faturamento_valor) * valor_base;
+       
+    }   
 
   
     </script>
