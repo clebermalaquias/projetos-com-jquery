@@ -1,5 +1,0 @@
-php artisan
-install composer via linha de comando: composer global require "laravel/installer"
-criacao de projeto laravel:laravel new meuteste
-start server:php artisan server
-

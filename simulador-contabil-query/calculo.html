@@ -11,23 +11,48 @@
 
 <body>
 
-    <button type="button" class="btn" id="simples">Simples Nacional</button> 
-    <button type="button" class="btn" id="lucro">Lucro Presumido</button> <br>
 
-    Qual faturamento mensal da sua empresa? <br />
-    <select name="faturamento" id="faturamento">
-        <option value="1" selected>até R$25.000,00</option>
-        <option value="2">de R$25.00,00 até R$50.000,00</option>
-        <option value="5">de R$50.00,00 até R$100.000,00</option>
-        <option value="7">de R$100.00,00 até R$150.000,00</option>
-    </select><br />
+    <table border="2">
 
-    Numero de funcionarios:<br /><input type="number" name="funcionarios" id="funcionarios" size="30" value="0" min="0" max="10"/><br />
-    Numero de socios na empresa:<br /> <input type="number" name="socios" id="socios" size="30" value="1" min="1" max="10"/><br />
+        <tr>
+            <td>
+            
+
+                Qual faturamento mensal da sua empresa? <br />
+                <select name="faturamento" id="faturamento">
+                    <option value="1" selected>até R$25.000,00</option>
+                    <option value="2">de R$25.00,00 até R$50.000,00</option>
+                    <option value="5">de R$50.00,00 até R$100.000,00</option>
+                    <option value="7">de R$100.00,00 até R$150.000,00</option>
+                </select><br />
+
+                Numero de funcionarios:<br /><input type="number" name="funcionarios" id="funcionarios" size="30" value="0" min="0" max="10"/>
+                <br />
+                Numero de socios na empresa:<br /> <input type="number" name="socios" id="socios" size="30" value="1" min="1" max="10"/><br />
+                 
+                
+            </td>
+        
+        
+            <td>
+                <p><center>Simples Nacional</center></p><br /> 
+                
      
-    <div>
-        Valor total: <span id="valor_total_text"></span>
-    </div>
+                <div>
+                    <center>Sua mensalidade é: <br/>R$  <span id="valor_total_simples_text"></span></center>
+                </div>
+            </td>
+         
+        
+            <td>
+                <p><center>Lucro Presumido</center></p> <br />
+
+                
+                <div>
+                    <center>Sua mensalidade é: <br />R$ <span id="valor_total_presumido_text"></span></center>
+                </div>
+            </td>
+        </tr> 
 
 
     <!--scripts-->
@@ -36,24 +61,24 @@
 
     
        
-    var total = 0;
-    var valor_base= 25;
+    var total_simples = 0;
+    var total_presumido = 0;
+    var valor_base_simples= 25;
+    var valor_base_presumido= 50;
     $(document).ready(function(){
            
         atualizaValor();
-        $("#simples").attr("disabled","disabled");
-        $("#lucro").removeAttr('disabled');
-        $("#valor_total_text").text("R$ " + total);
+        //$("#simples").attr("disabled","disabled");
+        //$("#lucro").removeAttr('disabled');
+        //$("#valor_total_text").text("R$ " + total);
 
         
-        $("#simples").click(function(){
+        /*$("#simples").click(function(){
             
             if(Number($("#faturamento").val()) ==1 && Number($("#funcionarios").val()) ==0 && Number($('#socios').val()) ==1 
-                    && (total ==0 || total < 50 )){
+                    && (total == 0 || total < 50 || total == 100)){
                 total = 50;
                 
-            }else{
-               total +=valor_base;    
             }
             
             $(this).attr("disabled","disabled");
@@ -64,11 +89,9 @@
          $("#lucro").click(function(){
             
             if(Number($("#faturamento").val()) ==1 && Number($("#funcionarios").val()) ==0 && Number($('#socios').val()) ==1 
-                    && (total ==0 || total <100)){
+                    && (total == 0 || total < 100)){
                 total = 100;
               
-            }else{
-                total +=valor_base;    
             }
 
            
@@ -76,24 +99,24 @@
             $("#simples").removeAttr('disabled');
             $("#valor_total_text").text("R$ " + total);
         });
-
+        */
         $("#faturamento").change(function(){
 
             atualizaValor();
-            $("#valor_total_text").text("R$ " + total);
+            //$("#valor_total_text").text("R$ " + total);
             
         });  
 
         $("#funcionarios").change(function() {
 
             atualizaValor();
-            $("#valor_total_text").text("R$ " + total);
+            //$("#valor_total_text").text("R$ " + total);
         });   
 
          $('#socios').change(function() {
            
             atualizaValor();
-            $("#valor_total_text").text("R$ " + total);
+            //$("#valor_total_text").text("R$ " + total);
             
         });  
 
@@ -108,9 +131,13 @@
         var socios_valor = Number($("#socios").val());
         
         if(funcionarios_valor > 0 || socios_valor > 1 || faturamento_valor >= 1){
-            total = (funcionarios_valor + socios_valor + faturamento_valor) * valor_base;
+            total_simples = (funcionarios_valor + socios_valor + faturamento_valor) * valor_base_simples;
+            total_presumido = (funcionarios_valor + socios_valor + faturamento_valor) * valor_base_presumido;
+
         }
         
+        $("#valor_total_simples_text").text(total_simples);
+        $("#valor_total_presumido_text").text(total_presumido);
 
     }   
 
